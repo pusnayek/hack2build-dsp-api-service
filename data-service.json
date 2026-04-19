@@ -1,0 +1,1188 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Use the title annotation on your CDS service to provide a meaningful title.",
+    "description": "Use the Core.LongDescription or Core.Description annotation on your CDS service to provide a meaningful description.",
+    "version": ""
+  },
+  "x-sap-api-type": "ODATAV4",
+  "x-odata-version": "4.01",
+  "x-sap-shortText": "Use the Core.Description annotation on your CDS service to provide a meaningful short text.",
+  "servers": [
+    {
+      "url": "/rest/data"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Rev Timing Data"
+    }
+  ],
+  "paths": {
+    "/$batch": {
+      "post": {
+        "summary": "Sends a group of requests",
+        "description": "Group multiple requests into a single request payload, see [Batch Requests](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_BatchRequests).\n\n*Please note that \"Try it out\" is not supported for this request.*",
+        "tags": [
+          "Batch Requests"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Batch request",
+          "content": {
+            "multipart/mixed;boundary=request-separator": {
+              "schema": {
+                "type": "string"
+              },
+              "example": "--request-separator\nContent-Type: application/http\nContent-Transfer-Encoding: binary\n\nGET RevTimingData HTTP/1.1\nAccept: application/json\n\n\n--request-separator--"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch response",
+            "content": {
+              "multipart/mixed": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "--response-separator\nContent-Type: application/http\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{...}\n--response-separator--"
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/RevTimingData": {
+      "get": {
+        "summary": "Retrieves a list of rev timing data.",
+        "tags": [
+          "Rev Timing Data"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "PurchaseOrder",
+                  "PurchaseOrder desc",
+                  "AccountAssignmentCategory",
+                  "AccountAssignmentCategory desc",
+                  "CompanyCode",
+                  "CompanyCode desc",
+                  "Customer",
+                  "Customer desc",
+                  "BaseUnit",
+                  "BaseUnit desc",
+                  "Customer_Country",
+                  "Customer_Country desc",
+                  "Delivery_Month",
+                  "Delivery_Month desc",
+                  "GLAccount",
+                  "GLAccount desc",
+                  "IsCompletelyDelivered",
+                  "IsCompletelyDelivered desc",
+                  "LocalCurrency",
+                  "LocalCurrency desc",
+                  "Material",
+                  "Material desc",
+                  "Plant",
+                  "Plant desc",
+                  "PurchaseOrderDate",
+                  "PurchaseOrderDate desc",
+                  "PurchaseOrderItem",
+                  "PurchaseOrderItem desc",
+                  "PurchaseOrderItemText",
+                  "PurchaseOrderItemText desc",
+                  "PurchaseOrderScheduleLine",
+                  "PurchaseOrderScheduleLine desc",
+                  "PurchaseOrderType",
+                  "PurchaseOrderType desc",
+                  "Purchase_Order_Month",
+                  "Purchase_Order_Month desc",
+                  "PurchasingGroup",
+                  "PurchasingGroup desc",
+                  "PurchasingOrganization",
+                  "PurchasingOrganization desc",
+                  "ScheduleLineDeliveryDate",
+                  "ScheduleLineDeliveryDate desc",
+                  "Schedule_Delivery_Month",
+                  "Schedule_Delivery_Month desc",
+                  "Supplier",
+                  "Supplier desc",
+                  "Supplier_Country",
+                  "Supplier_Country desc",
+                  "SupplyingPlant",
+                  "SupplyingPlant desc",
+                  "TCURR",
+                  "TCURR desc",
+                  "UniqueID",
+                  "UniqueID desc",
+                  "NetOrderValue_LocalCurrency",
+                  "NetOrderValue_LocalCurrency desc",
+                  "OrderQuantity",
+                  "OrderQuantity desc",
+                  "NetOrderValue_TargetCurrency",
+                  "NetOrderValue_TargetCurrency desc",
+                  "NetOrderValue_Tariff_TargetCurrency",
+                  "NetOrderValue_Tariff_TargetCurrency desc",
+                  "CC_TOTAL_TARIFF",
+                  "CC_TOTAL_TARIFF desc",
+                  "Lead_TimeDays",
+                  "Lead_TimeDays desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "PurchaseOrder",
+                  "AccountAssignmentCategory",
+                  "CompanyCode",
+                  "Customer",
+                  "BaseUnit",
+                  "Customer_Country",
+                  "Delivery_Month",
+                  "GLAccount",
+                  "IsCompletelyDelivered",
+                  "LocalCurrency",
+                  "Material",
+                  "Plant",
+                  "PurchaseOrderDate",
+                  "PurchaseOrderItem",
+                  "PurchaseOrderItemText",
+                  "PurchaseOrderScheduleLine",
+                  "PurchaseOrderType",
+                  "Purchase_Order_Month",
+                  "PurchasingGroup",
+                  "PurchasingOrganization",
+                  "ScheduleLineDeliveryDate",
+                  "Schedule_Delivery_Month",
+                  "Supplier",
+                  "Supplier_Country",
+                  "SupplyingPlant",
+                  "TCURR",
+                  "UniqueID",
+                  "NetOrderValue_LocalCurrency",
+                  "OrderQuantity",
+                  "NetOrderValue_TargetCurrency",
+                  "NetOrderValue_Tariff_TargetCurrency",
+                  "CC_TOTAL_TARIFF",
+                  "Lead_TimeDays"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved rev timing data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of RevTimingData",
+                  "properties": {
+                    "@count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DataService.RevTimingData"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a single rev timing datum.",
+        "tags": [
+          "Rev Timing Data"
+        ],
+        "requestBody": {
+          "description": "New rev timing datum",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataService.RevTimingData-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created rev timing datum",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataService.RevTimingData"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/RevTimingData('{PurchaseOrder}')": {
+      "parameters": [
+        {
+          "description": "key: PurchaseOrder",
+          "in": "path",
+          "name": "PurchaseOrder",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "maxLength": 100
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieves a single rev timing datum.",
+        "tags": [
+          "Rev Timing Data"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "PurchaseOrder",
+                  "AccountAssignmentCategory",
+                  "CompanyCode",
+                  "Customer",
+                  "BaseUnit",
+                  "Customer_Country",
+                  "Delivery_Month",
+                  "GLAccount",
+                  "IsCompletelyDelivered",
+                  "LocalCurrency",
+                  "Material",
+                  "Plant",
+                  "PurchaseOrderDate",
+                  "PurchaseOrderItem",
+                  "PurchaseOrderItemText",
+                  "PurchaseOrderScheduleLine",
+                  "PurchaseOrderType",
+                  "Purchase_Order_Month",
+                  "PurchasingGroup",
+                  "PurchasingOrganization",
+                  "ScheduleLineDeliveryDate",
+                  "Schedule_Delivery_Month",
+                  "Supplier",
+                  "Supplier_Country",
+                  "SupplyingPlant",
+                  "TCURR",
+                  "UniqueID",
+                  "NetOrderValue_LocalCurrency",
+                  "OrderQuantity",
+                  "NetOrderValue_TargetCurrency",
+                  "NetOrderValue_Tariff_TargetCurrency",
+                  "CC_TOTAL_TARIFF",
+                  "Lead_TimeDays"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved rev timing datum",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataService.RevTimingData"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Changes a single rev timing datum.",
+        "tags": [
+          "Rev Timing Data"
+        ],
+        "requestBody": {
+          "description": "New property values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataService.RevTimingData-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a single rev timing datum.",
+        "tags": [
+          "Rev Timing Data"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/getGreeting": {
+      "get": {
+        "summary": "Invokes function getGreeting",
+        "tags": [
+          "Service Operations"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DataService.RevTimingData": {
+        "title": "RevTimingData",
+        "type": "object",
+        "properties": {
+          "PurchaseOrder": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "AccountAssignmentCategory": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "CompanyCode": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Customer": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "BaseUnit": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Customer_Country": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Delivery_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "GLAccount": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "IsCompletelyDelivered": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "LocalCurrency": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Material": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Plant": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderDate": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderItem": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderItemText": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderScheduleLine": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderType": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Purchase_Order_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchasingGroup": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchasingOrganization": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "ScheduleLineDeliveryDate": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Schedule_Delivery_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Supplier": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Supplier_Country": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "SupplyingPlant": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "TCURR": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "UniqueID": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "NetOrderValue_LocalCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "OrderQuantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "NetOrderValue_TargetCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "NetOrderValue_Tariff_TargetCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "CC_TOTAL_TARIFF": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Lead_TimeDays": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          }
+        }
+      },
+      "DataService.RevTimingData-create": {
+        "title": "RevTimingData (for create)",
+        "type": "object",
+        "properties": {
+          "PurchaseOrder": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "AccountAssignmentCategory": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "CompanyCode": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Customer": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "BaseUnit": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Customer_Country": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Delivery_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "GLAccount": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "IsCompletelyDelivered": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "LocalCurrency": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Material": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Plant": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderDate": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderItem": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderItemText": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderScheduleLine": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderType": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Purchase_Order_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchasingGroup": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchasingOrganization": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "ScheduleLineDeliveryDate": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Schedule_Delivery_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Supplier": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Supplier_Country": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "SupplyingPlant": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "TCURR": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "UniqueID": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "NetOrderValue_LocalCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "OrderQuantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "NetOrderValue_TargetCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "NetOrderValue_Tariff_TargetCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "CC_TOTAL_TARIFF": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Lead_TimeDays": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          }
+        },
+        "required": [
+          "PurchaseOrder"
+        ]
+      },
+      "DataService.RevTimingData-update": {
+        "title": "RevTimingData (for update)",
+        "type": "object",
+        "properties": {
+          "AccountAssignmentCategory": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "CompanyCode": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Customer": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "BaseUnit": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Customer_Country": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Delivery_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "GLAccount": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "IsCompletelyDelivered": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "LocalCurrency": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Material": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Plant": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderDate": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderItem": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderItemText": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderScheduleLine": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchaseOrderType": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Purchase_Order_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchasingGroup": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "PurchasingOrganization": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "ScheduleLineDeliveryDate": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Schedule_Delivery_Month": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Supplier": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Supplier_Country": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "SupplyingPlant": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "TCURR": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "UniqueID": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "NetOrderValue_LocalCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "OrderQuantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "NetOrderValue_TargetCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "NetOrderValue_Tariff_TargetCurrency": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal",
+                "multipleOf": 0.001
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "x-sap-precision": 20,
+            "x-sap-scale": 3,
+            "nullable": true
+          },
+          "CC_TOTAL_TARIFF": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "Lead_TimeDays": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          }
+        }
+      },
+      "count": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "description": "The number of entities in the collection. Available when using the [$count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount) query option."
+      },
+      "error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "code",
+                    "message"
+                  ],
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "innererror": {
+                "type": "object",
+                "description": "The structure of this object is service-specific"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "top": {
+        "name": "$top",
+        "in": "query",
+        "description": "Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "example": 50
+      },
+      "skip": {
+        "name": "$skip",
+        "in": "query",
+        "description": "Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "count": {
+        "name": "$count",
+        "in": "query",
+        "description": "Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "search": {
+        "name": "$search",
+        "in": "query",
+        "description": "Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch)",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "error": {
+        "description": "Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
