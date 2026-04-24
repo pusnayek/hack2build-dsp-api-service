@@ -8,7 +8,7 @@ entity AM_GV_CL_RevTiming_01 {
 	Customer_Country: String(100);
 	Delivery_Month: String(100);
 	GLAccount: String(100);
-	IsCompletelyDelivered: String(100);
+	IsCompletelyDelivered: Boolean;
 	LocalCurrency: String(100);
 	Material: String(100);
 	Plant: String(100);
@@ -32,5 +32,29 @@ entity AM_GV_CL_RevTiming_01 {
 	NetOrderValue_TargetCurrency: Decimal(20,3);
 	NetOrderValue_Tariff_TargetCurrency: Decimal(20,3);
 	CC_TOTAL_TARIFF: String(100);
-	Lead_TimeDays: String(100);
+	Lead_TimeDays: Integer;
+};
+
+@cds.persistence.exists
+entity SalesOrderView {
+	key technicalID : UUID;
+	Material : String;
+	Material_Text : String;
+	MaterialGroup : String;
+	Material_Group_Text : String;
+	SalesOrderDate: Date;
+	OrderMonth : Integer;
+	OrderYear : Integer;
+	ActualOrderQuantityUnit : Decimal(30,5);
+	Predicted_Net_Amount: Decimal(30,5);
+	predicted_Sum_OrderQuantity: Decimal(30,5);
+	Actual_OrderQuantity: Decimal(30,5);
+	RequestedQuantity: Decimal(30,5);
+	RequestedQuantityUnit: String;
+	ActualNetPricePer_Quantity: Decimal(30,5);
+	ActualNetAmount: Decimal(30,5);
+	Expected_Billing_Date: Date;
+	predicted_at: Timestamp;
+	Expected_Payment_Date: Date;
+	Expected_Payment_Month: Integer
 };

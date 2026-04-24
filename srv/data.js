@@ -4,18 +4,86 @@ const axios = require('axios');
 class DataService extends cds.ApplicationService { init() {
 
   const { RevTimingData } = this.entities;
-  // const datasphereApiConst = JSON.parse(process.env.DATASPHERE_OAUTH_ACCESS);  
-  // const {client_id, client_secret, auth_refresh_token, hostname, authhostname} = datasphereApiConst
-  //?$filter=CompanyCode eq '1710' and PurchaseOrder eq '5000000006'
+  const DSP_URL = 'https://vp-dsp-poc18.eu10.hcs.cloud.sap/api/v1/datasphere/consumption'
 
   this.on('getGreeting', () => 'Hello World' ) 
 
-  this.on('READ', RevTimingData, async (req) => {
-    let baseUrl = "https://vp-dsp-poc18.eu10.hcs.cloud.sap/api/v1/datasphere/consumption/analytical/IBM_HACK2B_REVTIMING/AM_GV_CL_RevTiming_01/AM_GV_CL_RevTiming_01(TARGET_CURRENCY=?)/Set";
+  this.on('getSalesOrdersByMaterial', async (req, res) => {
+    const { Material } = req.data 
+    let sRelativePath = `/relational/ZTEST_BDC_DACH_HANA/L1_H2B_CF_Transform_Data_Merge/L1_H2B_CF_Transform_Data_Merge?$filter=Material eq '${Material}'`
+    let baseUrl = DSP_URL.concat(sRelativePath)
     const access_token = await getAccessToken()
+    console.log(baseUrl)
+    let response = await axios.get(baseUrl, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+    // let value = response.data?.value;
+    // return {"result" : value};
+    return response.data?.value;
+  })
+
+  this.on('getPurchaseOrderDetailsV1', async (req, res) => {
+    let { PurchaseOrder } = req.data 
+    if(!PurchaseOrder) {
+      PurchaseOrder = req.http?.req?.query?.["PurchaseOrder"];
+      if(PurchaseOrder && PurchaseOrder.length > 0) {
+        PurchaseOrder = PurchaseOrder.substring(1,PurchaseOrder.length-1)
+      }
+    }
+    console.log(PurchaseOrder)
+    let sRelativePath = `/analytical/IBM_HACK2B_REVTIMING/AM_GV_CL_RevTiming_01/AM_GV_CL_RevTiming_01(TARGET_CURRENCY='USD')/Set?$filter=PurchaseOrder eq '${PurchaseOrder}'`
+    let baseUrl = DSP_URL.concat(sRelativePath)
+    const access_token = await getAccessToken()
+    console.log(baseUrl)
+    let response = await axios.get(baseUrl, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+
+    // console.log(response.data)
+    let value = response.data?.value.shift();
+    // return JSON.stringify(value);
+    return {"result": value };
+    // return response.data;
+  })
+
+  this.on('getPurchaseOrderDetails', async (req, res) => {
+    let { PurchaseOrder } = req.data 
+    if(!PurchaseOrder) {
+      PurchaseOrder = req.http?.req?.query?.["PurchaseOrder"];
+      if(PurchaseOrder && PurchaseOrder.length > 0) {
+        PurchaseOrder = PurchaseOrder.substring(1,PurchaseOrder.length-1)
+      }
+    }
+    console.log(PurchaseOrder)
+    let sRelativePath = `/analytical/IBM_HACK2B_REVTIMING/AM_GV_CL_RevTiming_01/AM_GV_CL_RevTiming_01(TARGET_CURRENCY='USD')/Set?$filter=PurchaseOrder eq '${PurchaseOrder}'`
+    let baseUrl = DSP_URL.concat(sRelativePath)
+    const access_token = await getAccessToken()
+    console.log(baseUrl)
+    let response = await axios.get(baseUrl, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+
+    // console.log(response.data)
+    // let value = response.data?.value.shift();
+    let value = response.data?.value.shift();
+    // return JSON.stringify(value);
+    return value;
+    // return response.data;
+  })
+
+  this.on('READ', RevTimingData, async (req) => {
+    let baseUrl = DSP_URL.concat("/analytical/IBM_HACK2B_REVTIMING/AM_GV_CL_RevTiming_01/AM_GV_CL_RevTiming_01(TARGET_CURRENCY=?)/Set")
+    const access_token = await getAccessToken()
+    console.log(access_token)
     // console.log(req.http.req.query)
     // console.log(req.http.req)
-    const oQuery = req.http.req.query;
+    const oQuery = req.http?.req?.query;
     let targetCurrency = oQuery['TARGET_CURRENCY']
     targetCurrency = targetCurrency ? targetCurrency : "'USD'"
     console.log(targetCurrency)
@@ -47,14 +115,14 @@ class DataService extends cds.ApplicationService { init() {
     //   return item
     // })
     // console.log(response.data)
-
-    return response.data;
+    let value = response.data?.value;
+    return value;
   })
 
   async function getAccessToken() {
     const tokenUrl = 'https://vp-dsp-poc18.authentication.eu10.hana.ondemand.com/oauth/token';
-    const clientId = 'XXXX';
-    const clientSecret = 'XXXXX';
+    const clientId = 'sb-97689a5c-7d42-47a2-adbc-bdb5997f4c27!b573821|client!b3650';
+    const clientSecret = 'c3eebc7f-b3c0-4be2-9946-62cfdcdd2287$cXqFRxsDh-6CqtbBz7_4v_rFjdw-9NFhcVTlwy9P9ls=';
 
     // Format body as x-www-form-urlencoded
     const params = new URLSearchParams();
