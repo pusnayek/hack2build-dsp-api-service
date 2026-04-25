@@ -1,123 +1,68 @@
 const cds = require('@sap/cds')
 const axios = require('axios');
 
-class DataService extends cds.ApplicationService { init() {
-
-  const { RevTimingData } = this.entities;
-  const DSP_URL = 'https://vp-dsp-poc18.eu10.hcs.cloud.sap/api/v1/datasphere/consumption'
-
-  this.on('getGreeting', () => 'Hello World' ) 
-
-  this.on('getSalesOrdersByMaterial', async (req, res) => {
-    const { Material } = req.data 
-    let sRelativePath = `/relational/ZTEST_BDC_DACH_HANA/L1_H2B_CF_Transform_Data_Merge/L1_H2B_CF_Transform_Data_Merge?$filter=Material eq '${Material}'`
-    let baseUrl = DSP_URL.concat(sRelativePath)
-    const access_token = await getAccessToken()
-    console.log(baseUrl)
-    let response = await axios.get(baseUrl, {
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-    // let value = response.data?.value;
-    // return {"result" : value};
-    return response.data?.value;
-  })
-
-  this.on('getPurchaseOrderDetailsV1', async (req, res) => {
-    let { PurchaseOrder } = req.data 
-    if(!PurchaseOrder) {
-      PurchaseOrder = req.http?.req?.query?.["PurchaseOrder"];
-      if(PurchaseOrder && PurchaseOrder.length > 0) {
-        PurchaseOrder = PurchaseOrder.substring(1,PurchaseOrder.length-1)
-      }
-    }
-    console.log(PurchaseOrder)
-    let sRelativePath = `/analytical/IBM_HACK2B_REVTIMING/AM_GV_CL_RevTiming_01/AM_GV_CL_RevTiming_01(TARGET_CURRENCY='USD')/Set?$filter=PurchaseOrder eq '${PurchaseOrder}'`
-    let baseUrl = DSP_URL.concat(sRelativePath)
-    const access_token = await getAccessToken()
-    console.log(baseUrl)
-    let response = await axios.get(baseUrl, {
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-
-    // console.log(response.data)
-    let value = response.data?.value.shift();
-    // return JSON.stringify(value);
-    return {"result": value };
-    // return response.data;
-  })
-
-  this.on('getPurchaseOrderDetails', async (req, res) => {
-    let { PurchaseOrder } = req.data 
-    if(!PurchaseOrder) {
-      PurchaseOrder = req.http?.req?.query?.["PurchaseOrder"];
-      if(PurchaseOrder && PurchaseOrder.length > 0) {
-        PurchaseOrder = PurchaseOrder.substring(1,PurchaseOrder.length-1)
-      }
-    }
-    console.log(PurchaseOrder)
-    let sRelativePath = `/analytical/IBM_HACK2B_REVTIMING/AM_GV_CL_RevTiming_01/AM_GV_CL_RevTiming_01(TARGET_CURRENCY='USD')/Set?$filter=PurchaseOrder eq '${PurchaseOrder}'`
-    let baseUrl = DSP_URL.concat(sRelativePath)
-    const access_token = await getAccessToken()
-    console.log(baseUrl)
-    let response = await axios.get(baseUrl, {
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-
-    // console.log(response.data)
-    // let value = response.data?.value.shift();
-    let value = response.data?.value.shift();
-    // return JSON.stringify(value);
-    return value;
-    // return response.data;
-  })
-
-  this.on('READ', RevTimingData, async (req) => {
-    let baseUrl = DSP_URL.concat("/analytical/IBM_HACK2B_REVTIMING/AM_GV_CL_RevTiming_01/AM_GV_CL_RevTiming_01(TARGET_CURRENCY=?)/Set")
-    const access_token = await getAccessToken()
-    console.log(access_token)
-    // console.log(req.http.req.query)
-    // console.log(req.http.req)
-    const oQuery = req.http?.req?.query;
-    let targetCurrency = oQuery['TARGET_CURRENCY']
-    targetCurrency = targetCurrency ? targetCurrency : "'USD'"
-    console.log(targetCurrency)
-    baseUrl = baseUrl.replace('?', decodeURIComponent(targetCurrency))
-    console.log(baseUrl)
+function prepareServieUrl(params, baseUrl) {
     let sQueryUrl = '';
-    if(oQuery['$select']) {
-      sQueryUrl = '$select='.concat(decodeURIComponent(oQuery['$select']));
+    if(params['$select']) {
+      sQueryUrl = '$select='.concat(decodeURIComponent(params['$select']));
     }
-    if(oQuery['$filter']) {
+    if(params['$filter']) {
       if(sQueryUrl.length > 0) {
         sQueryUrl = sQueryUrl.concat('&');
       }
-      sQueryUrl = sQueryUrl.concat('$filter='.concat(decodeURIComponent(oQuery['$filter'])));
+      sQueryUrl = sQueryUrl.concat('$filter='.concat(decodeURIComponent(params['$filter'])));
     }
+    if(params['$search']) {
+      if(sQueryUrl.length > 0) {
+        sQueryUrl = sQueryUrl.concat('&');
+      }
+      sQueryUrl = sQueryUrl.concat('$search='.concat(decodeURIComponent(params['$search'])));
+    }
+
     if(sQueryUrl && sQueryUrl.length > 0) {
       baseUrl = baseUrl.concat('?');
       baseUrl = baseUrl.concat(sQueryUrl);
     }
-    console.log(baseUrl)
-    let response = await axios.get(baseUrl, {
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
+    // console.log(baseUrl)
+    return baseUrl
+}
 
-    // response = response.value.map(function(item) {      
-    //   console.log(JSON.stringify(item))
-    //   return item
-    // })
-    // console.log(response.data)
+
+class DataService extends cds.ApplicationService { init() {
+
+  const { SalesPredictionActuals, SalesPedictionPast } = this.entities;
+  const DSP_URL = 'https://vp-dsp-poc18.eu10.hcs.cloud.sap/api/v1/datasphere/consumption'
+
+  this.on('READ', SalesPredictionActuals, async (req) => {
+    let baseUrl = DSP_URL.concat("/relational/ZTEST_BDC_DACH_HANA/L1_H2B_CF_Transform_Data_with_actuals/L1_H2B_CF_Transform_Data_with_actuals")
+    const params = req.http?.req?.query || {};    
+    let response = await invokeService(baseUrl, params)
     let value = response.data?.value;
     return value;
   })
+
+  this.on('READ', SalesPedictionPast, async (req) => {
+    let baseUrl = DSP_URL.concat("/relational/ZTEST_BDC_DACH_HANA/L1_H2B_CF_Transform_Data_Merge/L1_H2B_CF_Transform_Data_Merge")
+    const params = req.http?.req?.query || {};    
+    let response = await invokeService(baseUrl, params)
+    let value = response.data?.value;
+    return value;
+  })
+
+  this.on('getGreeting', () => 'Hello World' ) 
+
+  async function invokeService(baseUrl, params) {
+      const access_token = await getAccessToken()
+      baseUrl = prepareServieUrl(params, baseUrl)
+      return await axios.get(baseUrl, {
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }, params: {
+          '$top': params['$top'],
+          '$skip': params['$skip']
+        }
+      })
+  }
 
   async function getAccessToken() {
     const tokenUrl = 'https://vp-dsp-poc18.authentication.eu10.hana.ondemand.com/oauth/token';

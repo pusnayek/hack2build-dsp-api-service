@@ -1,19 +1,12 @@
-using AM_GV_CL_RevTiming_01 from '../db/data';
-using SalesOrderView from '../db/data';
-
+using ViewSalesPredictionActuals from '../db/data';
+using ViewSalesPedictionPast from '../db/data';
 
 service DataService {
 
-    entity RevTimingData as projection on AM_GV_CL_RevTiming_01;
-
-    entity SalesOrder as projection on SalesOrderView;
-
     function getGreeting() returns String;
 
-    function getPurchaseOrderDetails(PurchaseOrder: String) returns many RevTimingData;
+    entity SalesPredictionActuals as projection on ViewSalesPredictionActuals;
 
-    function getPurchaseOrderDetailsV1(PurchaseOrder: String) returns RevTimingData;
-
-    function getSalesOrdersByMaterial(Material: String) returns many SalesOrder;
+    entity SalesPedictionPast as projection on ViewSalesPedictionPast;
 
 }

@@ -15,9 +15,6 @@
   ],
   "tags": [
     {
-      "name": "Rev Timing Data"
-    },
-    {
       "name": "Sales Order"
     }
   ],
@@ -37,7 +34,7 @@
               "schema": {
                 "type": "string"
               },
-              "example": "--request-separator\nContent-Type: application/http\nContent-Transfer-Encoding: binary\n\nGET RevTimingData HTTP/1.1\nAccept: application/json\n\n\n--request-separator--"
+              "example": "--request-separator\nContent-Type: application/http\nContent-Transfer-Encoding: binary\n\nGET SalesOrder HTTP/1.1\nAccept: application/json\n\n\n--request-separator--"
             }
           }
         },
@@ -52,348 +49,6 @@
                 "example": "--response-separator\nContent-Type: application/http\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{...}\n--response-separator--"
               }
             }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/error"
-          }
-        }
-      }
-    },
-    "/RevTimingData": {
-      "get": {
-        "summary": "Retrieves a list of rev timing data.",
-        "tags": [
-          "Rev Timing Data"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/top"
-          },
-          {
-            "$ref": "#/components/parameters/skip"
-          },
-          {
-            "$ref": "#/components/parameters/search"
-          },
-          {
-            "name": "$filter",
-            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/count"
-          },
-          {
-            "name": "$orderby",
-            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
-            "in": "query",
-            "explode": false,
-            "schema": {
-              "type": "array",
-              "uniqueItems": true,
-              "items": {
-                "type": "string",
-                "enum": [
-                  "PurchaseOrder",
-                  "PurchaseOrder desc",
-                  "AccountAssignmentCategory",
-                  "AccountAssignmentCategory desc",
-                  "CompanyCode",
-                  "CompanyCode desc",
-                  "Customer",
-                  "Customer desc",
-                  "BaseUnit",
-                  "BaseUnit desc",
-                  "Customer_Country",
-                  "Customer_Country desc",
-                  "Delivery_Month",
-                  "Delivery_Month desc",
-                  "GLAccount",
-                  "GLAccount desc",
-                  "IsCompletelyDelivered",
-                  "IsCompletelyDelivered desc",
-                  "LocalCurrency",
-                  "LocalCurrency desc",
-                  "Material",
-                  "Material desc",
-                  "Plant",
-                  "Plant desc",
-                  "PurchaseOrderDate",
-                  "PurchaseOrderDate desc",
-                  "PurchaseOrderItem",
-                  "PurchaseOrderItem desc",
-                  "PurchaseOrderItemText",
-                  "PurchaseOrderItemText desc",
-                  "PurchaseOrderScheduleLine",
-                  "PurchaseOrderScheduleLine desc",
-                  "PurchaseOrderType",
-                  "PurchaseOrderType desc",
-                  "Purchase_Order_Month",
-                  "Purchase_Order_Month desc",
-                  "PurchasingGroup",
-                  "PurchasingGroup desc",
-                  "PurchasingOrganization",
-                  "PurchasingOrganization desc",
-                  "ScheduleLineDeliveryDate",
-                  "ScheduleLineDeliveryDate desc",
-                  "Schedule_Delivery_Month",
-                  "Schedule_Delivery_Month desc",
-                  "Supplier",
-                  "Supplier desc",
-                  "Supplier_Country",
-                  "Supplier_Country desc",
-                  "SupplyingPlant",
-                  "SupplyingPlant desc",
-                  "TCURR",
-                  "TCURR desc",
-                  "UniqueID",
-                  "UniqueID desc",
-                  "NetOrderValue_LocalCurrency",
-                  "NetOrderValue_LocalCurrency desc",
-                  "OrderQuantity",
-                  "OrderQuantity desc",
-                  "NetOrderValue_TargetCurrency",
-                  "NetOrderValue_TargetCurrency desc",
-                  "NetOrderValue_Tariff_TargetCurrency",
-                  "NetOrderValue_Tariff_TargetCurrency desc",
-                  "CC_TOTAL_TARIFF",
-                  "CC_TOTAL_TARIFF desc",
-                  "Lead_TimeDays",
-                  "Lead_TimeDays desc"
-                ]
-              }
-            }
-          },
-          {
-            "name": "$select",
-            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
-            "in": "query",
-            "explode": false,
-            "schema": {
-              "type": "array",
-              "uniqueItems": true,
-              "items": {
-                "type": "string",
-                "enum": [
-                  "PurchaseOrder",
-                  "AccountAssignmentCategory",
-                  "CompanyCode",
-                  "Customer",
-                  "BaseUnit",
-                  "Customer_Country",
-                  "Delivery_Month",
-                  "GLAccount",
-                  "IsCompletelyDelivered",
-                  "LocalCurrency",
-                  "Material",
-                  "Plant",
-                  "PurchaseOrderDate",
-                  "PurchaseOrderItem",
-                  "PurchaseOrderItemText",
-                  "PurchaseOrderScheduleLine",
-                  "PurchaseOrderType",
-                  "Purchase_Order_Month",
-                  "PurchasingGroup",
-                  "PurchasingOrganization",
-                  "ScheduleLineDeliveryDate",
-                  "Schedule_Delivery_Month",
-                  "Supplier",
-                  "Supplier_Country",
-                  "SupplyingPlant",
-                  "TCURR",
-                  "UniqueID",
-                  "NetOrderValue_LocalCurrency",
-                  "OrderQuantity",
-                  "NetOrderValue_TargetCurrency",
-                  "NetOrderValue_Tariff_TargetCurrency",
-                  "CC_TOTAL_TARIFF",
-                  "Lead_TimeDays"
-                ]
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Retrieved rev timing data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "title": "Collection of RevTimingData",
-                  "properties": {
-                    "@count": {
-                      "$ref": "#/components/schemas/count"
-                    },
-                    "value": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/DataService.RevTimingData"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Creates a single rev timing datum.",
-        "tags": [
-          "Rev Timing Data"
-        ],
-        "requestBody": {
-          "description": "New rev timing datum",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DataService.RevTimingData-create"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created rev timing datum",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DataService.RevTimingData"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/error"
-          }
-        }
-      }
-    },
-    "/RevTimingData('{PurchaseOrder}')": {
-      "parameters": [
-        {
-          "description": "key: PurchaseOrder",
-          "in": "path",
-          "name": "PurchaseOrder",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "maxLength": 100
-          }
-        }
-      ],
-      "get": {
-        "summary": "Retrieves a single rev timing datum.",
-        "tags": [
-          "Rev Timing Data"
-        ],
-        "parameters": [
-          {
-            "name": "$select",
-            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
-            "in": "query",
-            "explode": false,
-            "schema": {
-              "type": "array",
-              "uniqueItems": true,
-              "items": {
-                "type": "string",
-                "enum": [
-                  "PurchaseOrder",
-                  "AccountAssignmentCategory",
-                  "CompanyCode",
-                  "Customer",
-                  "BaseUnit",
-                  "Customer_Country",
-                  "Delivery_Month",
-                  "GLAccount",
-                  "IsCompletelyDelivered",
-                  "LocalCurrency",
-                  "Material",
-                  "Plant",
-                  "PurchaseOrderDate",
-                  "PurchaseOrderItem",
-                  "PurchaseOrderItemText",
-                  "PurchaseOrderScheduleLine",
-                  "PurchaseOrderType",
-                  "Purchase_Order_Month",
-                  "PurchasingGroup",
-                  "PurchasingOrganization",
-                  "ScheduleLineDeliveryDate",
-                  "Schedule_Delivery_Month",
-                  "Supplier",
-                  "Supplier_Country",
-                  "SupplyingPlant",
-                  "TCURR",
-                  "UniqueID",
-                  "NetOrderValue_LocalCurrency",
-                  "OrderQuantity",
-                  "NetOrderValue_TargetCurrency",
-                  "NetOrderValue_Tariff_TargetCurrency",
-                  "CC_TOTAL_TARIFF",
-                  "Lead_TimeDays"
-                ]
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Retrieved rev timing datum",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DataService.RevTimingData"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/error"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Changes a single rev timing datum.",
-        "tags": [
-          "Rev Timing Data"
-        ],
-        "requestBody": {
-          "description": "New property values",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DataService.RevTimingData-update"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Success"
-          },
-          "4XX": {
-            "$ref": "#/components/responses/error"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Deletes a single rev timing datum.",
-        "tags": [
-          "Rev Timing Data"
-        ],
-        "responses": {
-          "204": {
-            "description": "Success"
           },
           "4XX": {
             "$ref": "#/components/responses/error"
@@ -449,36 +104,38 @@
                   "MaterialGroup desc",
                   "Material_Group_Text",
                   "Material_Group_Text desc",
-                  "SalesOrderDate",
-                  "SalesOrderDate desc",
-                  "OrderMonth",
-                  "OrderMonth desc",
-                  "OrderYear",
-                  "OrderYear desc",
-                  "ActualOrderQuantityUnit",
-                  "ActualOrderQuantityUnit desc",
+                  "PredictedSalesOrderDate",
+                  "PredictedSalesOrderDate desc",
+                  "PredictedSalesOrderMonth",
+                  "PredictedSalesOrderMonth desc",
+                  "PredictedSalesOrderYear",
+                  "PredictedSalesOrderYear desc",
+                  "Predicted_Sales_Order_Quantity",
+                  "Predicted_Sales_Order_Quantity desc",
                   "Predicted_Net_Amount",
                   "Predicted_Net_Amount desc",
-                  "predicted_Sum_OrderQuantity",
-                  "predicted_Sum_OrderQuantity desc",
-                  "Actual_OrderQuantity",
-                  "Actual_OrderQuantity desc",
-                  "RequestedQuantity",
-                  "RequestedQuantity desc",
-                  "RequestedQuantityUnit",
-                  "RequestedQuantityUnit desc",
-                  "ActualNetPricePer_Quantity",
-                  "ActualNetPricePer_Quantity desc",
-                  "ActualNetAmount",
-                  "ActualNetAmount desc",
+                  "Sum_OrderQuantity",
+                  "Sum_OrderQuantity desc",
+                  "ActualSalesOrderDate",
+                  "ActualSalesOrderDate desc",
                   "Expected_Billing_Date",
                   "Expected_Billing_Date desc",
-                  "predicted_at",
-                  "predicted_at desc",
+                  "Sum_NetAmount",
+                  "Sum_NetAmount desc",
+                  "Actuals_salesOrder_quantity",
+                  "Actuals_salesOrder_quantity desc",
+                  "ActualSalesOrderMonth",
+                  "ActualSalesOrderMonth desc",
+                  "Price_Per_quantity",
+                  "Price_Per_quantity desc",
                   "Expected_Payment_Date",
                   "Expected_Payment_Date desc",
                   "Expected_Payment_Month",
-                  "Expected_Payment_Month desc"
+                  "Expected_Payment_Month desc",
+                  "gap_actual_vs_forecast",
+                  "gap_actual_vs_forecast desc",
+                  "Percentage_error",
+                  "Percentage_error desc"
                 ]
               }
             }
@@ -499,21 +156,22 @@
                   "Material_Text",
                   "MaterialGroup",
                   "Material_Group_Text",
-                  "SalesOrderDate",
-                  "OrderMonth",
-                  "OrderYear",
-                  "ActualOrderQuantityUnit",
+                  "PredictedSalesOrderDate",
+                  "PredictedSalesOrderMonth",
+                  "PredictedSalesOrderYear",
+                  "Predicted_Sales_Order_Quantity",
                   "Predicted_Net_Amount",
-                  "predicted_Sum_OrderQuantity",
-                  "Actual_OrderQuantity",
-                  "RequestedQuantity",
-                  "RequestedQuantityUnit",
-                  "ActualNetPricePer_Quantity",
-                  "ActualNetAmount",
+                  "Sum_OrderQuantity",
+                  "ActualSalesOrderDate",
                   "Expected_Billing_Date",
-                  "predicted_at",
+                  "Sum_NetAmount",
+                  "Actuals_salesOrder_quantity",
+                  "ActualSalesOrderMonth",
+                  "Price_Per_quantity",
                   "Expected_Payment_Date",
-                  "Expected_Payment_Month"
+                  "Expected_Payment_Month",
+                  "gap_actual_vs_forecast",
+                  "Percentage_error"
                 ]
               }
             }
@@ -616,21 +274,22 @@
                   "Material_Text",
                   "MaterialGroup",
                   "Material_Group_Text",
-                  "SalesOrderDate",
-                  "OrderMonth",
-                  "OrderYear",
-                  "ActualOrderQuantityUnit",
+                  "PredictedSalesOrderDate",
+                  "PredictedSalesOrderMonth",
+                  "PredictedSalesOrderYear",
+                  "Predicted_Sales_Order_Quantity",
                   "Predicted_Net_Amount",
-                  "predicted_Sum_OrderQuantity",
-                  "Actual_OrderQuantity",
-                  "RequestedQuantity",
-                  "RequestedQuantityUnit",
-                  "ActualNetPricePer_Quantity",
-                  "ActualNetAmount",
+                  "Sum_OrderQuantity",
+                  "ActualSalesOrderDate",
                   "Expected_Billing_Date",
-                  "predicted_at",
+                  "Sum_NetAmount",
+                  "Actuals_salesOrder_quantity",
+                  "ActualSalesOrderMonth",
+                  "Price_Per_quantity",
                   "Expected_Payment_Date",
-                  "Expected_Payment_Month"
+                  "Expected_Payment_Month",
+                  "gap_actual_vs_forecast",
+                  "Percentage_error"
                 ]
               }
             }
@@ -722,97 +381,6 @@
         }
       }
     },
-    "/getPurchaseOrderDetails": {
-      "get": {
-        "summary": "Invokes function getPurchaseOrderDetails",
-        "tags": [
-          "Rev Timing Data"
-        ],
-        "parameters": [
-          {
-            "required": false,
-            "in": "query",
-            "name": "PurchaseOrder",
-            "description": "String value needs to be enclosed in single quotes",
-            "schema": {
-              "type": "string",
-              "nullable": true,
-              "pattern": "^(null|'([^']|'')*')$",
-              "default": "null"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "title": "Collection of RevTimingData",
-                  "properties": {
-                    "@count": {
-                      "$ref": "#/components/schemas/count"
-                    },
-                    "value": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/DataService.RevTimingData"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/error"
-          }
-        }
-      }
-    },
-    "/getPurchaseOrderDetailsV1": {
-      "get": {
-        "summary": "Invokes function getPurchaseOrderDetailsV1",
-        "tags": [
-          "Rev Timing Data"
-        ],
-        "parameters": [
-          {
-            "required": false,
-            "in": "query",
-            "name": "PurchaseOrder",
-            "description": "String value needs to be enclosed in single quotes",
-            "schema": {
-              "type": "string",
-              "nullable": true,
-              "pattern": "^(null|'([^']|'')*')$",
-              "default": "null"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/DataService.RevTimingData"
-                    }
-                  ],
-                  "nullable": true
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/error"
-          }
-        }
-      }
-    },
     "/getSalesOrdersByMaterial": {
       "get": {
         "summary": "Invokes function getSalesOrdersByMaterial",
@@ -865,644 +433,6 @@
   },
   "components": {
     "schemas": {
-      "DataService.RevTimingData": {
-        "title": "RevTimingData",
-        "type": "object",
-        "properties": {
-          "PurchaseOrder": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "AccountAssignmentCategory": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "CompanyCode": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Customer": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "BaseUnit": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Customer_Country": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Delivery_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "GLAccount": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "IsCompletelyDelivered": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "LocalCurrency": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Material": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Plant": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderDate": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderItem": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderItemText": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderScheduleLine": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderType": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Purchase_Order_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchasingGroup": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchasingOrganization": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "ScheduleLineDeliveryDate": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Schedule_Delivery_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Supplier": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Supplier_Country": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "SupplyingPlant": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "TCURR": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "UniqueID": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "NetOrderValue_LocalCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "NetOrderValue_TargetCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "NetOrderValue_Tariff_TargetCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "CC_TOTAL_TARIFF": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Lead_TimeDays": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        }
-      },
-      "DataService.RevTimingData-create": {
-        "title": "RevTimingData (for create)",
-        "type": "object",
-        "properties": {
-          "PurchaseOrder": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "AccountAssignmentCategory": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "CompanyCode": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Customer": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "BaseUnit": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Customer_Country": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Delivery_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "GLAccount": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "IsCompletelyDelivered": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "LocalCurrency": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Material": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Plant": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderDate": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderItem": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderItemText": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderScheduleLine": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderType": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Purchase_Order_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchasingGroup": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchasingOrganization": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "ScheduleLineDeliveryDate": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Schedule_Delivery_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Supplier": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Supplier_Country": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "SupplyingPlant": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "TCURR": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "UniqueID": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "NetOrderValue_LocalCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "NetOrderValue_TargetCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "NetOrderValue_Tariff_TargetCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "CC_TOTAL_TARIFF": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Lead_TimeDays": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        },
-        "required": [
-          "PurchaseOrder"
-        ]
-      },
-      "DataService.RevTimingData-update": {
-        "title": "RevTimingData (for update)",
-        "type": "object",
-        "properties": {
-          "AccountAssignmentCategory": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "CompanyCode": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Customer": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "BaseUnit": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Customer_Country": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Delivery_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "GLAccount": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "IsCompletelyDelivered": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "LocalCurrency": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Material": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Plant": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderDate": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderItem": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderItemText": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderScheduleLine": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchaseOrderType": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Purchase_Order_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchasingGroup": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "PurchasingOrganization": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "ScheduleLineDeliveryDate": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Schedule_Delivery_Month": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Supplier": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Supplier_Country": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "SupplyingPlant": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "TCURR": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "UniqueID": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "NetOrderValue_LocalCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "NetOrderValue_TargetCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "NetOrderValue_Tariff_TargetCurrency": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 20,
-            "x-sap-scale": 3,
-            "nullable": true
-          },
-          "CC_TOTAL_TARIFF": {
-            "type": "string",
-            "maxLength": 100,
-            "nullable": true
-          },
-          "Lead_TimeDays": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        }
-      },
       "DataService.SalesOrder": {
         "title": "SalesOrder",
         "type": "object",
@@ -1528,159 +458,144 @@
             "type": "string",
             "nullable": true
           },
-          "SalesOrderDate": {
+          "PredictedSalesOrderDate": {
             "type": "string",
             "format": "date",
             "example": "2017-04-13",
             "nullable": true
           },
-          "OrderMonth": {
+          "PredictedSalesOrderMonth": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "OrderYear": {
+          "PredictedSalesOrderYear": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "ActualOrderQuantityUnit": {
+          "Predicted_Sales_Order_Quantity": {
             "anyOf": [
               {
                 "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
+                "format": "decimal"
               },
               {
                 "type": "string"
               }
             ],
             "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
             "nullable": true
           },
           "Predicted_Net_Amount": {
             "anyOf": [
               {
                 "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
+                "format": "decimal"
               },
               {
                 "type": "string"
               }
             ],
             "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
             "nullable": true
           },
-          "predicted_Sum_OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
+          "Sum_OrderQuantity": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
-          "Actual_OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "RequestedQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "RequestedQuantityUnit": {
-            "type": "string",
-            "nullable": true
-          },
-          "ActualNetPricePer_Quantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "ActualNetAmount": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "Expected_Billing_Date": {
+          "ActualSalesOrderDate": {
             "type": "string",
             "format": "date",
             "example": "2017-04-13",
             "nullable": true
           },
-          "predicted_at": {
+          "Expected_Billing_Date": {
             "type": "string",
             "format": "date-time",
             "example": "2017-04-13T15:51:04.0000000Z",
             "nullable": true
           },
+          "Sum_NetAmount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "Actuals_salesOrder_quantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "ActualSalesOrderMonth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "Price_Per_quantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
           "Expected_Payment_Date": {
             "type": "string",
-            "format": "date",
-            "example": "2017-04-13",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
             "nullable": true
           },
           "Expected_Payment_Month": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "gap_actual_vs_forecast": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "Percentage_error": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
             "nullable": true
           }
         }
@@ -1710,159 +625,144 @@
             "type": "string",
             "nullable": true
           },
-          "SalesOrderDate": {
+          "PredictedSalesOrderDate": {
             "type": "string",
             "format": "date",
             "example": "2017-04-13",
             "nullable": true
           },
-          "OrderMonth": {
+          "PredictedSalesOrderMonth": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "OrderYear": {
+          "PredictedSalesOrderYear": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "ActualOrderQuantityUnit": {
+          "Predicted_Sales_Order_Quantity": {
             "anyOf": [
               {
                 "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
+                "format": "decimal"
               },
               {
                 "type": "string"
               }
             ],
             "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
             "nullable": true
           },
           "Predicted_Net_Amount": {
             "anyOf": [
               {
                 "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
+                "format": "decimal"
               },
               {
                 "type": "string"
               }
             ],
             "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
             "nullable": true
           },
-          "predicted_Sum_OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
+          "Sum_OrderQuantity": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
-          "Actual_OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "RequestedQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "RequestedQuantityUnit": {
-            "type": "string",
-            "nullable": true
-          },
-          "ActualNetPricePer_Quantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "ActualNetAmount": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "Expected_Billing_Date": {
+          "ActualSalesOrderDate": {
             "type": "string",
             "format": "date",
             "example": "2017-04-13",
             "nullable": true
           },
-          "predicted_at": {
+          "Expected_Billing_Date": {
             "type": "string",
             "format": "date-time",
             "example": "2017-04-13T15:51:04.0000000Z",
             "nullable": true
           },
+          "Sum_NetAmount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "Actuals_salesOrder_quantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "ActualSalesOrderMonth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "Price_Per_quantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
           "Expected_Payment_Date": {
             "type": "string",
-            "format": "date",
-            "example": "2017-04-13",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
             "nullable": true
           },
           "Expected_Payment_Month": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "gap_actual_vs_forecast": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "Percentage_error": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
             "nullable": true
           }
         }
@@ -1887,159 +787,144 @@
             "type": "string",
             "nullable": true
           },
-          "SalesOrderDate": {
+          "PredictedSalesOrderDate": {
             "type": "string",
             "format": "date",
             "example": "2017-04-13",
             "nullable": true
           },
-          "OrderMonth": {
+          "PredictedSalesOrderMonth": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "OrderYear": {
+          "PredictedSalesOrderYear": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "ActualOrderQuantityUnit": {
+          "Predicted_Sales_Order_Quantity": {
             "anyOf": [
               {
                 "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
+                "format": "decimal"
               },
               {
                 "type": "string"
               }
             ],
             "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
             "nullable": true
           },
           "Predicted_Net_Amount": {
             "anyOf": [
               {
                 "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
+                "format": "decimal"
               },
               {
                 "type": "string"
               }
             ],
             "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
             "nullable": true
           },
-          "predicted_Sum_OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
+          "Sum_OrderQuantity": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
-          "Actual_OrderQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "RequestedQuantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "RequestedQuantityUnit": {
-            "type": "string",
-            "nullable": true
-          },
-          "ActualNetPricePer_Quantity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "ActualNetAmount": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "decimal",
-                "multipleOf": 0.00001
-              },
-              {
-                "type": "string"
-              }
-            ],
-            "example": 0,
-            "x-sap-precision": 30,
-            "x-sap-scale": 5,
-            "nullable": true
-          },
-          "Expected_Billing_Date": {
+          "ActualSalesOrderDate": {
             "type": "string",
             "format": "date",
             "example": "2017-04-13",
             "nullable": true
           },
-          "predicted_at": {
+          "Expected_Billing_Date": {
             "type": "string",
             "format": "date-time",
             "example": "2017-04-13T15:51:04.0000000Z",
             "nullable": true
           },
+          "Sum_NetAmount": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "Actuals_salesOrder_quantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "ActualSalesOrderMonth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "Price_Per_quantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
           "Expected_Payment_Date": {
             "type": "string",
-            "format": "date",
-            "example": "2017-04-13",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
             "nullable": true
           },
           "Expected_Payment_Month": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "gap_actual_vs_forecast": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
+            "nullable": true
+          },
+          "Percentage_error": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "decimal"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "example": 0,
             "nullable": true
           }
         }
